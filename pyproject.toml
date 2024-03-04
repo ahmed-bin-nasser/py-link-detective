@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "py-link-detective"
-version = "0.1.0"
+version = "1.0.0"
 description = "A simple implementation of a dead link detection tool using python asyncio library"
 authors = ["Ahmed Bin Nasser <ahmednasser.bin@gmail.com>"]
 readme = "README.md"
