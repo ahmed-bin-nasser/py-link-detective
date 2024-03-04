@@ -28,7 +28,19 @@ def cli_args():
 
     # number of concurrent request
     parser.add_argument(
-        "-n", type=int, default=10, help="number of concurrent request at a time"
+        "-n",
+        "num-concurrent-requests",
+        type=int,
+        default=10,
+        help="number of concurrent request at a time, default is 10",
+    )
+
+    parser.add_argument(
+        "-t",
+        "timeout",
+        type=int,
+        default=5,
+        help="timeout for each request, default is 5 seconds",
     )
 
     # adding a group for printer choice(console / json)
@@ -62,7 +74,7 @@ class Printer(Protocol):
 async def worker(args: argparse.Namespace, printer: Printer):
     is_duplicate = is_duplicate_checker()
     semaphore = asyncio.Semaphore(args.n)
-    client = httpx.AsyncClient()
+    client = httpx.AsyncClient(timeout=args.timeout)
     results = collections.defaultdict(list)
 
     tasks = []
