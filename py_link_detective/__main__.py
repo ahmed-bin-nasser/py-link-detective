@@ -96,8 +96,6 @@ async def worker(args: argparse.Namespace, printer: Printer):
 def main():
     args = cli_args()
     if args.j:
-        printer = JsonPrinter("./output.json")
+        asyncio.run(worker(args, JsonPrinter("./output.json")))
     else:
-        printer = ConsolePrinter()
-
-    asyncio.run(worker(args, printer))
+        asyncio.run(worker(args, ConsolePrinter()))

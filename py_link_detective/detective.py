@@ -35,13 +35,14 @@ def is_duplicate_checker() -> Callable[[str], bool]:
 def retry_on_error(retries: int = 3, delay: float = 1.0):
     def decorator(func):
         async def wrapper(*args, **kwargs):
+            status = 0
             for i in range(retries):
                 status = await func(*args, **kwargs)
                 if status not in [0, -1]:
                     return status
 
                 await asyncio.sleep(delay * (i + 1))  # Introduce delay between retries
-            return -1  # Return -1 if all retries fail
+            return status  # Return -1 if all retries fail
 
         return wrapper
 
