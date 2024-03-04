@@ -18,7 +18,7 @@ from py_link_detective.detective import (
 
 def cli_args():
     parser = argparse.ArgumentParser(
-        description="Detective: A simple link checker for websites"
+        description="A simple implementation of a dead link detection tool using python asyncio library"
     )
 
     # Add version argument
@@ -28,10 +28,11 @@ def cli_args():
 
     # number of concurrent request
     parser.add_argument(
-        "--num_concurrent_requests",
+        "--num_async_requests",
         "-n",
         type=int,
         default=10,
+        metavar="",
         help="number of concurrent request at a time, default is 10",
     )
 
@@ -40,6 +41,7 @@ def cli_args():
         "-t",
         type=int,
         default=5,
+        metavar="",
         help="timeout for each request, default is 5 seconds",
     )
 
@@ -73,7 +75,7 @@ class Printer(Protocol):
 
 async def worker(args: argparse.Namespace, printer: Printer):
     is_duplicate = is_duplicate_checker()
-    semaphore = asyncio.Semaphore(args.num_concurrent_requests)
+    semaphore = asyncio.Semaphore(args.num_async_requests)
     client = httpx.AsyncClient(timeout=args.timeout)
     results = collections.defaultdict(list)
 
