@@ -30,7 +30,7 @@ jobs:
         run: poetry install
 
       - name: Type checking with mypy
-        run: poetry run mypy --non-interactive --install-types && poetry run mypy -p py_link_detective --check-untyped-defs
+        run: poetry run mypy --non-interactive --install-types -p py_link_detective --check-untyped-defs
 
       - name: Test with pytest
         run: poetry run pytest
